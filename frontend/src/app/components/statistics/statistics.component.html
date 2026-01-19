@@ -1,0 +1,42 @@
+<div class="container">
+  <h2>Team Statistics</h2>
+
+  <div *ngIf="error" class="alert alert-error">{{ error }}</div>
+  <div *ngIf="loading" class="loading">Loading statistics...</div>
+
+  <div *ngIf="!loading && statistics" class="statistics-grid">
+    <div class="stat-card">
+      <h3>Match Record</h3>
+      <div class="stat-value">{{ statistics.totalMatches }}</div>
+      <div class="stat-label">Total Matches</div>
+    </div>
+
+    <div class="stat-card stat-wins">
+      <h3>Wins</h3>
+      <div class="stat-value">{{ statistics.wins }}</div>
+      <div class="stat-label">{{ getWinPercentage().toFixed(1) }}%</div>
+    </div>
+
+    <div class="stat-card stat-draws">
+      <h3>Draws</h3>
+      <div class="stat-value">{{ statistics.draws }}</div>
+      <div class="stat-label">{{ getDrawPercentage().toFixed(1) }}%</div>
+    </div>
+
+    <div class="stat-card stat-losses">
+      <h3>Losses</h3>
+      <div class="stat-value">{{ statistics.losses }}</div>
+      <div class="stat-label">{{ getLossPercentage().toFixed(1) }}%</div>
+    </div>
+
+    <div class="stat-card stat-attendance">
+      <h3>Training Attendance</h3>
+      <div class="stat-value">{{ statistics.trainingAttendanceRate.toFixed(1) }}%</div>
+      <div class="stat-label">Average Attendance Rate</div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && statistics && statistics.totalMatches === 0" class="empty-state">
+    No match data available yet. Play some matches and record results to see statistics.
+  </div>
+</div>

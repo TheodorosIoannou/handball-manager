@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>{{ isEditMode ? 'Edit Event' : 'Add Event' }}</h2>
+
+  <div *ngIf="error" class="alert alert-error">{{ error }}</div>
+
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <label>Type</label>
+    <select formControlName="type">
+      <option *ngFor="let type of eventTypes" [value]="type">
+        {{ type }}
+      </option>
+    </select>
+
+    <label>Title</label>
+    <input type="text" formControlName="title" />
+
+    <label>Location</label>
+    <input type="text" formControlName="location" />
+
+    <label>Date & Time</label>
+    <input type="datetime-local" formControlName="dateTime" />
+
+    <label>Duration (minutes)</label>
+    <input type="number" formControlName="durationMinutes" />
+
+    <label>Opponent</label>
+    <input type="text" formControlName="opponent" />
+
+    <label>Notes</label>
+    <textarea formControlName="notes"></textarea>
+
+    <button type="submit" [disabled]="loading">
+      {{ isEditMode ? 'Update' : 'Create' }}
+    </button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </form>
+</div>

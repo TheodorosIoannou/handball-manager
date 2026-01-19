@@ -1,0 +1,54 @@
+<div class="container">
+  <h2>Attendance - {{ event?.title }}</h2>
+
+  <div *ngIf="event" class="event-info">
+    <p><strong>Date:</strong> {{ event.dateTime | date:'medium' }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-error">{{ error }}</div>
+  <div *ngIf="loading" class="loading">Loading...</div>
+
+  <table *ngIf="!loading && attendances.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Shirt #</th>
+        <th>Status</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let attendance of attendances">
+        <td>{{ attendance.player.firstName }} {{ attendance.player.lastName }}</td>
+        <td>{{ attendance.player.shirtNumber }}</td>
+        <td>
+          <select 
+            [value]="attendance.status || ''"
+            (change)="onStatusChange(attendance, $any($event.target).value)"
+            class="form-control">
+            <option value="">Not set</option>
+            <option *ngFor="let status of attendanceStatuses" [value]="status">
+              {{ statusLabels[status] }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <input 
+            type="text" 
+            [value]="attendance.comment || ''"
+            (input)="onCommentChange(attendance, $any($event.target).value)"
+            class="form-control" 
+            placeholder="Optional comment">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="form-actions" *ngIf="!loading">
+    <button class="btn btn-primary" (click)="saveAttendances()" [disabled]="loading">
+      Save Attendances
+    </button>
+    <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+  </div>
+</div>
